@@ -19,5 +19,9 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.703.0",
+    "@types/node": "^22.10.1"
+  }
 }
