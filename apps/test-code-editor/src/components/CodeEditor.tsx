@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
 import Editor from "@monaco-editor/react";
+import { useFolderContext } from "./context/FolderContext";
 
 const CodeEditor = () => {
-  const [initialized, setInitialized] = useState(false);
-
-  const [value, setValue] = useState("// some comment");
-  const [onOpenFile, setOnOpenFile] = useState<string | null>(null);
+  const [value, setValue] = useState("");
+  const { currentFile } = useFolderContext();
 
   useEffect(() => {
-    if (!initialized) {
-      setInitialized(true);
+    if (currentFile && currentFile.content) {
+      setValue(currentFile.content);
+    } else {
+      setValue("");
     }
-  }, [initialized]);
+  }, [currentFile]);
 
   return (
     <Editor

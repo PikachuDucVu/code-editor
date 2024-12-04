@@ -1,7 +1,7 @@
 export type File = {
   name: string;
   type: "file";
-  fileContent?: string;
+  content?: string;
 };
 
 export type Folder = {
