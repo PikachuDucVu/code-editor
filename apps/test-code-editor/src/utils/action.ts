@@ -1,4 +1,4 @@
-import { FolderHandler } from "@/components/context/folderContext";
+import { FolderHandler } from "@/components/context/FolderContext";
 import { getStorage } from "./localStorage";
 import { Folder } from "./types";
 
@@ -7,10 +7,6 @@ export const getRootFolder = (): Folder => {
     getStorage("FolderTree") || { name: "root", type: "folder", children: [] }
   );
 };
-
-// export const addFolder = (folderName: string): void => {
-//   const rootFolder = getRootFolder();
-// };
 
 export class Deferred<T> {
   promise: Promise<T>;

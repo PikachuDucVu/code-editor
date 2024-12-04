@@ -1,0 +1,15 @@
+✔ Load monaco @done(24-12-04 13:52)
+✔ Folder + file tree: add file, add folder, delete folder, delete file @done(24-12-04 13:52)
+☐ Folder Advanced features: 
+  ☐ Save
+  ☐ Multiselect
+  ☐ Drag and drop
+  ☐ Rename
+  ☐ Copy
+  ☐ Paste
+  ☐ Cut
+  ☐ Delete
+☐ Autocomplete
+  ☐ Import local file
+  ☐ From Module
+☐ Copilot
