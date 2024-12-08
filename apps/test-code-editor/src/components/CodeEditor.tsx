@@ -4,30 +4,30 @@ import * as monaco from "monaco-editor";
 import { useEffect, useRef, useState } from "react";
 import { useFolderContext } from "./context/FolderContext";
 
-type Props = {
-  height?: string;
-  language?: string;
-  theme?: string;
-  className?: string;
-  value?: string;
-  onChange?: (value: string) => void;
-};
-
 const CodeEditor = () => {
   const [value, setValue] = useState("");
   const { currentFile } = useFolderContext();
 
   const [initialized, setInitialized] = useState(false);
-  const editorRef = useRef<any>(null);
 
   useEffect(() => {
-    if (initialized) {
-      return;
-    }
+    // if (initialized) {
+    //   return;
+    // }
     loader.config({ monaco });
-    loader.init().then((monaco) => {
+    loader.init().then(async (monaco) => {
+      // const types = await fetch("http://localhost:3000").then((res) =>
+      //   res.text()
+      // );
+      const types = await fetch("bundle.d.ts").then((res) => res.text());
+      console.log(types);
+      // monaco.languages.typescript.typescriptDefaults.addExtraLib(
+      //   types,
+      //   "ts:gdxts.d.ts"
+      // );
+
       monaco.languages.typescript.typescriptDefaults.addExtraLib(
-        `type Props = {
+        `interface Props = {
             height?: string;
             language?: string;
             theme?: string;
@@ -36,11 +36,8 @@ const CodeEditor = () => {
             onChange?: (value: string) => void;
           };`
       );
-      monaco.languages.typescript.javascriptDefaults.setDiagnosticsOptions({
-        noSemanticValidation: false,
-        noSyntaxValidation: false,
-      });
-      setInitialized(true);
+
+      // setInitialized(true);
     });
   }, [currentFile, initialized]);
 

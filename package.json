@@ -24,6 +24,7 @@
     "@aws-sdk/client-s3": "^3.703.0",
     "@typefox/monaco-editor-react": "^4.5.3",
     "@types/node": "^22.10.1",
+    "hono": "^4.6.12",
     "monaco-editor-webpack-plugin": "^7.1.0"
   }
 }
