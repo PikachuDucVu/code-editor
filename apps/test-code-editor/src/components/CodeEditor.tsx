@@ -14,17 +14,26 @@ const CodeEditor = () => {
     // if (initialized) {
     //   return;
     // }
-    loader.config({ monaco });
+    loader.config({
+      monaco,
+    });
     loader.init().then(async (monaco) => {
       // const types = await fetch("http://localhost:3000").then((res) =>
       //   res.text()
       // );
-      const types = await fetch("bundle.d.ts").then((res) => res.text());
+      const types = await fetch("module.d.ts").then((res) => res.text());
       console.log(types);
-      // monaco.languages.typescript.typescriptDefaults.addExtraLib(
-      //   types,
-      //   "ts:gdxts.d.ts"
-      // );
+      monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
+        target: monaco.languages.typescript.ScriptTarget.ESNext,
+        module: monaco.languages.typescript.ModuleKind.ESNext,
+        allowNonTsExtensions: true,
+        moduleResolution:
+          monaco.languages.typescript.ModuleResolutionKind.NodeJs,
+      });
+      monaco.languages.typescript.typescriptDefaults.addExtraLib(
+        types,
+        "ts:gdxts.d.ts"
+      );
 
       monaco.languages.typescript.typescriptDefaults.addExtraLib(
         `interface Props = {
