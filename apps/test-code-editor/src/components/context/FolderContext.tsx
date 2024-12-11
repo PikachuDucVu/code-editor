@@ -12,11 +12,12 @@ const findFileByPath = (Folder: Folder | File, path: string[]): File | null => {
     const [current, ...rest] = remainingPath;
 
     if (item.type === "folder") {
-      const nextNode = item.children.find((child) => child.name === current);
-      if (nextNode) {
-        return rest.length === 0 && nextNode.type === "file"
-          ? (nextNode as File)
-          : traverse(nextNode, rest);
+      const nextFolder = item.children.find((child) => child.name === current);
+      console.log(nextFolder);
+      if (nextFolder) {
+        return rest.length === 0 && nextFolder.type === "file"
+          ? (nextFolder as File)
+          : traverse(nextFolder, rest);
       }
     }
 
@@ -173,7 +174,6 @@ export const useFolder = (
     } else {
       setCurrentFile(undefined);
     }
-    console.log(file);
   }, []);
 
   return {

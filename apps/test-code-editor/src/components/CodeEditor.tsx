@@ -1,59 +1,48 @@
 import Editor from "@monaco-editor/react";
 import { loader } from "@monaco-editor/react";
-import * as monaco from "monaco-editor";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useFolderContext } from "./context/FolderContext";
 
 const CodeEditor = () => {
   const [value, setValue] = useState("");
-  const { currentFile } = useFolderContext();
+  const { currentFile, root } = useFolderContext();
 
   const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
-    // if (initialized) {
-    //   return;
-    // }
-    loader.config({
-      monaco,
-    });
+    console.log(root);
+    if (initialized) {
+      return;
+    }
+
     loader.init().then(async (monaco) => {
       // const types = await fetch("http://localhost:3000").then((res) =>
       //   res.text()
       // );
       const types = await fetch("module.d.ts").then((res) => res.text());
-      console.log(types);
-      monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
-        target: monaco.languages.typescript.ScriptTarget.ESNext,
-        module: monaco.languages.typescript.ModuleKind.ESNext,
-        allowNonTsExtensions: true,
-        moduleResolution:
-          monaco.languages.typescript.ModuleResolutionKind.NodeJs,
-      });
       monaco.languages.typescript.typescriptDefaults.addExtraLib(
         types,
         "ts:gdxts.d.ts"
       );
 
-      monaco.languages.typescript.typescriptDefaults.addExtraLib(
-        `interface Props = {
-            height?: string;
-            language?: string;
-            theme?: string;
-            className?: string;
-            value?: string;
-            onChange?: (value: string) => void;
-          };`
-      );
+      monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
+        noSemanticValidation: true,
+        noSyntaxValidation: true,
+      });
+      monaco.languages.typescript.typescriptDefaults.setCompilerOptions({
+        allowNonTsExtensions: true,
+      });
+      monaco.languages.typescript.typescriptDefaults.setEagerModelSync(true);
 
-      // setInitialized(true);
+      loader.config({ monaco });
+
+      setInitialized(true);
     });
   }, [currentFile, initialized]);
 
   useEffect(() => {
     if (currentFile && currentFile.content) {
       setValue(currentFile.content);
-      // editorRef.current?.focus();
     } else {
       setValue("");
     }
