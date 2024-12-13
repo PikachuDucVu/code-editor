@@ -13,7 +13,6 @@ const findFileByPath = (Folder: Folder | File, path: string[]): File | null => {
 
     if (item.type === "folder") {
       const nextFolder = item.children.find((child) => child.name === current);
-      console.log(nextFolder);
       if (nextFolder) {
         return rest.length === 0 && nextFolder.type === "file"
           ? (nextFolder as File)
@@ -167,8 +166,9 @@ export const useFolder = (
     setAddPrompt(undefined);
   }, []);
 
-  const openFile = useCallback(async (path: string[]) => {
+  const handleOpenFileByPath = useCallback(async (path: string[]) => {
     const file = findFileByPath(folder, path);
+    console.log("open", path, file);
     if (file) {
       setCurrentFile(file);
     } else {
@@ -176,12 +176,22 @@ export const useFolder = (
     }
   }, []);
 
+  const getContentFileByPath = useCallback((path: string[]) => {
+    const file = findFileByPath(folder, path);
+    console.log(path, file);
+    if (file) {
+      return file.content;
+    }
+    return undefined;
+  }, []);
+
   return {
     root: folder,
     currentFile,
     add,
     remove,
-    openFile,
+    handleOpenFileByPath,
+    getContentFileByPath,
     cursor,
     setCursor,
     selectedPaths,

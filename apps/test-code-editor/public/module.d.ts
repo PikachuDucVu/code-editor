@@ -1,5 +1,4 @@
 declare module "gdxts" {
-  export * from "gdxts/dist/lib/3d";
   export * from "gdxts/dist/lib/Affine2";
   export * from "gdxts/dist/lib/Animation";
   export * from "gdxts/dist/lib/AssetManager";
@@ -31,7 +30,6 @@ declare module "gdxts" {
   export * from "gdxts/dist/lib/Viewport";
   export * from "gdxts/dist/lib/ViewportInputHandler";
 }
-
 declare module "gdxts/dist/lib/Affine2" {
   export const __esModule: boolean;
   export class Affine2 {

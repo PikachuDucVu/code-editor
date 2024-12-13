@@ -37,7 +37,7 @@ export const FolderDisplay = ({
     collapse,
     addPrompt,
     deletionConfirm,
-    openFile,
+    handleOpenFileByPath,
   } = useFolderContext();
   return (
     <div className="flex flex-col">
@@ -117,7 +117,7 @@ export const FolderDisplay = ({
 
                   if (!spanning && !picking) {
                     setSelectedPaths([childPath]);
-                    openFile(childPath);
+                    handleOpenFileByPath(childPath);
                   } else if (
                     spanning &&
                     isSibling(selectedPaths[0], childPath)

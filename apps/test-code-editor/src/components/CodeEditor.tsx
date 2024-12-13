@@ -1,16 +1,50 @@
 import Editor from "@monaco-editor/react";
 import { loader } from "@monaco-editor/react";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useFolderContext } from "./context/FolderContext";
+import { Folder } from "@/utils/types";
 
 const CodeEditor = () => {
   const [value, setValue] = useState("");
-  const { currentFile, root } = useFolderContext();
+  const { currentFile, root, getContentFileByPath } = useFolderContext();
 
   const [initialized, setInitialized] = useState(false);
 
+  // const findAllFiles = (tree: Folder) => {
+  //   let files: string[] = [];
+  //   let selectedPath: string[] = [];
+
+  //   async function traverse(node: Folder, path: string) {
+  //     selectedPath.push(`${node.name}`);
+
+  //     if (node.type === "file") {
+  //       files.push(`${path}/${node.name}`);
+  //     } else if (node.type === "folder" && node.children) {
+  //       for (const child of node.children) {
+  //         if (
+  //           child.type === "file" &&
+  //           child.name !== "index.ts" &&
+  //           child.name.endsWith(".ts")
+  //         ) {
+  //           files.push(`${path}/${child.name}`);
+  //           console.log("selected", selectedPath);
+  //           getContentFileByPath([...path.split("/").splice(2), child.name]);
+  //         }
+
+  //         if (child.type === "folder") {
+  //           traverse(child, `${path}/${node.name}`);
+  //         }
+  //       }
+  //     }
+  //   }
+
+  //   traverse(tree, "");
+  //   return files.map((file) => file.slice(1)); // Remove leading slash
+  // };
+
   useEffect(() => {
-    console.log(root);
+    // const files = findAllFiles(root);
+
     if (initialized) {
       return;
     }
@@ -49,16 +83,14 @@ const CodeEditor = () => {
   }, [currentFile]);
 
   return (
-    <>
-      <Editor
-        height="100%"
-        language="typescript"
-        theme="vs-dark"
-        className=""
-        value={value}
-        onChange={(value) => setValue(value || "")}
-      />
-    </>
+    <Editor
+      height="100%"
+      language="typescript"
+      theme="vs-dark"
+      className=""
+      value={value}
+      onChange={(value) => setValue(value || "")}
+    />
   );
 };
 
